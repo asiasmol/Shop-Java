@@ -1,0 +1,14 @@
+package com.codecool.shop;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class controler {
+
+
+    @GetMapping("/round")
+    public String helloword(){
+        return "footer";
+    }
+}
