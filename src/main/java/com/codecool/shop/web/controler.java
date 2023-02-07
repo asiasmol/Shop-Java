@@ -24,7 +24,7 @@ public class controler {
 
 
     @GetMapping("/")
-    public String helloword(HttpServletRequest req, Model model){
+    public String helloword(Model model){
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
