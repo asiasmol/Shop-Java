@@ -13,15 +13,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 @Controller
 public class ProductController {
+    ProductDao productDataStore = ProductDaoMem.getInstance();
+    private final Cart cart;
     ProductDao productDataStore;
     ProductCategoryDao productCategoryDataStore;
     SupplierDao supplierDataStore;
@@ -47,6 +51,19 @@ public class ProductController {
         // Alternative setting of the template context
     }
 
+    @Autowired
+    public ProductController(ProductDao productDataStore, Cart cart) {
+        this.cart = cart;
+    }
+
+    @GetMapping("/")
+    public String helloword(Model model){
+
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+        //setting up a new supplier
+
+
     @GetMapping("/")
     public String helloword(Model model){
         model.addAttribute("categories", productCategoryDataStore.getAll());
@@ -68,4 +85,17 @@ public class ProductController {
         model.addAttribute("products",productDataStore.getBy(supplierDataStore.find(suppliersId)));
         return "product/index";
     }
+    @GetMapping("/add/{productName}")
+    public String addProductToCart(@PathVariable("productName") String productName, Model model){
+
+        Optional<Product> oProduct = Optional.ofNullable(productDataStore.findByName(productName));
+        if(oProduct.isPresent()){
+            Product product = oProduct.get();
+            cart.add(product);
+        }
+        model.addAttribute("items", productDataStore.getAll());
+        return "product/index";
+    }
+
+
 }

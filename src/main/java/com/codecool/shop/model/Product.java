@@ -1,7 +1,10 @@
 package com.codecool.shop.model;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
 import java.math.BigDecimal;
 import java.util.Currency;
+
 
 public class Product extends BaseModel {
 
