@@ -92,6 +92,7 @@ public class ProductController {
         if(oProduct.isPresent()){
             Product product = oProduct.get();
             cart.add(product);
+            System.out.println(cart.toString());
         }
         model.addAttribute("items", productDataStore.getAll());
         return "product/index";
