@@ -33,13 +33,15 @@ public class ProductController {
         //setting up a new product category
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         productCategoryDataStore.add(tablet);
+        ProductCategory phone = new ProductCategory("phone", "Software", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
+        productCategoryDataStore.add(tablet);
         //setting up products and printing it
         productDataStore.add(new Product("Amazon Fire", new BigDecimal("49.9"), "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
         productDataStore.add(new Product("Lenovo IdeaPad Miix 700", new BigDecimal("479"), "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
         productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
         // Alternative setting of the template context
         // Alternative setting of the template context
-        model.addAttribute("category", productCategoryDataStore.find(1));
+        model.addAttribute("categorys", productCategoryDataStore.getAll());
         model.addAttribute("products",productDataStore.getBy(productCategoryDataStore.find(1)));
         return "product/index";
     }
