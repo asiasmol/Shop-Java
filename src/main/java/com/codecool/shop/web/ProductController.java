@@ -6,10 +6,11 @@ import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
-import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,17 +20,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.util.Optional;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 @Controller
 public class ProductController {
     ProductDao productDataStore = ProductDaoMem.getInstance();
     private final Cart cart;
-    ProductDao productDataStore;
     ProductCategoryDao productCategoryDataStore;
     SupplierDao supplierDataStore;
-    public ProductController() {
+
+    @Autowired
+    public ProductController(Cart cart) {
+        this.cart = cart;
         productDataStore = ProductDaoMem.getInstance();
         productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         supplierDataStore = SupplierDaoMem.getInstance();
@@ -50,19 +51,6 @@ public class ProductController {
         // Alternative setting of the template context
         // Alternative setting of the template context
     }
-
-    @Autowired
-    public ProductController(ProductDao productDataStore, Cart cart) {
-        this.cart = cart;
-    }
-
-    @GetMapping("/")
-    public String helloword(Model model){
-
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
-        //setting up a new supplier
-
 
     @GetMapping("/")
     public String helloword(Model model){
