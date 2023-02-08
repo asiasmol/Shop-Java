@@ -9,22 +9,26 @@ import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Controller
 public class ProductController {
-
-
-    @GetMapping("/")
-    public String helloword(Model model){
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
-        //setting up a new supplier
+    ProductDao productDataStore;
+    ProductCategoryDao productCategoryDataStore;
+    SupplierDao supplierDataStore;
+    public ProductController() {
+        productDataStore = ProductDaoMem.getInstance();
+        productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        supplierDataStore = SupplierDaoMem.getInstance();
         Supplier amazon = new Supplier("Amazon", "Digital content and services");
         supplierDataStore.add(amazon);
         Supplier lenovo = new Supplier("Lenovo", "Computers");
@@ -41,8 +45,18 @@ public class ProductController {
         productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
         // Alternative setting of the template context
         // Alternative setting of the template context
-        model.addAttribute("categorys", productCategoryDataStore.getAll());
+    }
+
+    @GetMapping("/")
+    public String helloword(Model model){
+        model.addAttribute("categories", productCategoryDataStore.getAll());
         model.addAttribute("products",productDataStore.getBy(productCategoryDataStore.find(1)));
+        return "product/index";
+    }
+    @PostMapping("/category")
+    public String sortByCategory (@RequestParam("categoryId") int categoryId,Model model) {
+        model.addAttribute("categories", productCategoryDataStore.getAll());
+        model.addAttribute("products",productDataStore.getBy(productCategoryDataStore.find(categoryId)));
         return "product/index";
     }
 }

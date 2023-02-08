@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
     <title>Codecool Shop</title>
-
+    <link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}"/>
+    <script th:src="@{/js/main.js}"></script>
     <!-- Bootstrap components -->
     <!-- Latest compiled and minified Jquery -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -27,8 +28,6 @@
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- End of Bootstrap components -->
 
-    <link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}"/>
-    "<script th:src="@{/js/main.js}"></script>"
 </head>
 
 <body>
@@ -39,10 +38,17 @@
 
 <div class="container">
 
-    <p> Category:</p>
-    <select>
-            <option th:each="category,iterStat :${categorys}"><strong th:text="${category.getDepartment()}">Category Title</strong></option>
+    <label for="category">
+        Category:
+    </label>
+    <form th:action="@{/category}" method="post" >
+        <select id="category" name = "categoryId"  >
+            <option th:each="category,iterStat :${categories}" th:value="${category.getId()}" th:text="${category.getDepartment()}"> </option>
         </select>
+        <button type="submit">submit</button>
+    </form>
+
+
 
 
     <div id="products" class="row">
@@ -69,7 +75,6 @@
 
 </div>
 
-<div th:replace="footer.html :: copy"></div>
-
+<div th:replace="~{/footer}" ></div>
 </body>
 </html>
