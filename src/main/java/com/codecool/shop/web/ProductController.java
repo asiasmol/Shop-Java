@@ -50,13 +50,22 @@ public class ProductController {
     @GetMapping("/")
     public String helloword(Model model){
         model.addAttribute("categories", productCategoryDataStore.getAll());
+        model.addAttribute("suppliers", supplierDataStore.getAll());
         model.addAttribute("products",productDataStore.getBy(productCategoryDataStore.find(1)));
         return "product/index";
     }
     @PostMapping("/category")
     public String sortByCategory (@RequestParam("categoryId") int categoryId,Model model) {
         model.addAttribute("categories", productCategoryDataStore.getAll());
+        model.addAttribute("suppliers", supplierDataStore.getAll());
         model.addAttribute("products",productDataStore.getBy(productCategoryDataStore.find(categoryId)));
+        return "product/index";
+    }
+    @PostMapping("/supplier")
+    public String sortBySuppliers(@RequestParam("suppliersId") int suppliersId,Model model) {
+        model.addAttribute("categories", productCategoryDataStore.getAll());
+        model.addAttribute("suppliers", supplierDataStore.getAll());
+        model.addAttribute("products",productDataStore.getBy(supplierDataStore.find(suppliersId)));
         return "product/index";
     }
 }
