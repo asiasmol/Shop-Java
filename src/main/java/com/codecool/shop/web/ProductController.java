@@ -75,7 +75,7 @@ public class ProductController {
             System.out.println(cart);
         }
         model.addAttribute("cartItems", cart.getAll());
-        return "product/index";
+        return "index";
     }
 
 //    @GetMapping("/remove/{id}")
