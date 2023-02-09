@@ -63,7 +63,6 @@ public class ProductController {
 
     @GetMapping("/add/{id}")
     public String addProductToCart(@PathVariable("id") int id, Model model) {
-
         model.addAttribute("categories", productCategoryDao.getAll());
         model.addAttribute("suppliers", supplierDao.getAll());
         model.addAttribute("products",productDao.getAll());
