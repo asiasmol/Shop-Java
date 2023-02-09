@@ -9,18 +9,18 @@ DROP TABLE IF EXISTS categories;
 CREATE TABLE users
 (
     id       SERIAL PRIMARY KEY,
-    name     VARCHAR(20),
-    surname  VARCHAR(20),
-    email    VARCHAR(20),
-    password VARCHAR(20),
-    address  VARCHAR(20)
+    name     text,
+    surname  text,
+    email    text,
+    password text,
+    address  text
 );
 
 CREATE TABLE orders
 (
     id          serial PRIMARY KEY,
     user_id     integer REFERENCES users (id),
-    products    VARCHAR(20),
+    products    text,
     data        date,
     final_price integer,
     is_paid     bit
@@ -29,23 +29,23 @@ CREATE TABLE orders
 CREATE TABLE categories
 (
     id          serial PRIMARY KEY,
-    name        VARCHAR(20),
-    department  VARCHAR(20),
-    description VARCHAR(200)
+    name        text,
+    department  text,
+    description text
 );
 
 CREATE TABLE supplier
 (
     id          serial PRIMARY KEY,
-    name        VARCHAR(20),
-    description VARCHAR(200)
+    name        text,
+    description text
 );
 CREATE TABLE products
 (
     id              SERIAL PRIMARY KEY,
-    name            VARCHAR(40),
-    price           VARCHAR(20),
-    currency_string VARCHAR(20),
+    name            text,
+    price           text,
+    currency_string text,
     description     VARCHAR(200),
     category_id     integer REFERENCES categories (id),
     supplier_id     integer REFERENCES supplier (id)
