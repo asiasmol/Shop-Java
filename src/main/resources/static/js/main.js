@@ -74,3 +74,9 @@ document.addEventListener("DOMContentLoaded", function (){
         }
     })
 })
+
+let closeCartBtt = document.getElementById("cartClose")
+let paymentBtt = document.getElementById("paymentButton")
+paymentBtt.addEventListener("click", function (){
+    closeCartBtt.click();
+})
