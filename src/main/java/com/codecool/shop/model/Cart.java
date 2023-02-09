@@ -17,22 +17,19 @@ public class  Cart {
         for (CartItem item : cartItems) {
             if (item.getProduct().getName().equals(product.getName())) {
                 item.increaseCounter();
-                recalculatePriceAndCounter();
                 notFound = false;
             }
         }
         if (notFound) {
             cartItems.add(new CartItem(product));
         }
+        recalculatePriceAndCounter();
     }
 
     public void remove(Product product) {
         for (CartItem item : cartItems) {
             if (item.getProduct().getName().equals(product.getName())) {
-//                item.decreaseCounter();
-//                if (item.hasZeroItems()) {
-                    cartItems.remove(item);
-//                }
+                cartItems.remove(item);
                 recalculatePriceAndCounter();
                 break;
             }
@@ -55,5 +52,8 @@ public class  Cart {
         return cartItems;
     }
 
+    public String getSum() {
+        return String.valueOf(sum);
+    }
 }
 

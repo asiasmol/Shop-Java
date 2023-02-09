@@ -40,6 +40,7 @@ public class ProductController {
     public String helloword(Model model) {
         model.addAttribute("categories", productCategoryDao.getAll());
         model.addAttribute("suppliers", supplierDao.getAll());
+        model.addAttribute("totalPrice", cart.getSum());
         model.addAttribute("products",productDao.getAll());
 //        System.out.println(productDao.getAll());
         return "index";
@@ -49,6 +50,7 @@ public class ProductController {
     public String sortByCategory(@RequestParam("categoryId") int categoryId, Model model) {
         model.addAttribute("categories", productCategoryDao.getAll());
         model.addAttribute("suppliers", supplierDao.getAll());
+        model.addAttribute("totalPrice", cart.getSum());
         model.addAttribute("products",productDao.getBy(productCategoryDao.find(categoryId)));
         return "index";
     }
@@ -57,6 +59,7 @@ public class ProductController {
     public String sortBySuppliers(@RequestParam("suppliersId") int suppliersId, Model model) {
         model.addAttribute("categories", productCategoryDao.getAll());
         model.addAttribute("suppliers", supplierDao.getAll());
+        model.addAttribute("totalPrice", cart.getSum());
         model.addAttribute("products",productDao.getBy(supplierDao.find(suppliersId)));
         return "index";
     }
@@ -75,6 +78,8 @@ public class ProductController {
             System.out.println(cart);
         }
         model.addAttribute("cartItems", cart.getAll());
+        model.addAttribute("counterProducts", cart.getAll().size());
+        model.addAttribute("totalPrice", cart.getSum());
         return "index";
     }
 
@@ -90,6 +95,8 @@ public class ProductController {
             cart.remove(product);
         }
         model.addAttribute("cartItems", cart.getAll());
+        model.addAttribute("counterProducts", cart.getAll().size());
+        model.addAttribute("totalPrice", cart.getSum());
         return "index";
     }
 
