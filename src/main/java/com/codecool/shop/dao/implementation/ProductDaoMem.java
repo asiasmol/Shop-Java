@@ -31,7 +31,8 @@ public class ProductDaoMem implements ProductDao {
 
     @Override
     public Product find(int id) {
-        return null;
+        return jdbc.queryForObject("SELECT * FROM products WHERE id = ?",
+                ProductDaoMem::mapRow, id);
     }
 
     @Override

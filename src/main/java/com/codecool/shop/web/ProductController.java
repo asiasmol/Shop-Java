@@ -61,16 +61,21 @@ public class ProductController {
         return "index";
     }
 
-    @GetMapping("/add/{productName}")
-    public String addProductToCart(@PathVariable("productName") String productName, Model model) {
+    @GetMapping("/add/{id}")
+    public String addProductToCart(@PathVariable("id") int id, Model model) {
 
-        Optional<Product> oProduct = Optional.ofNullable(productDao.findByName(productName));
+        model.addAttribute("categories", productCategoryDao.getAll());
+        model.addAttribute("suppliers", supplierDao.getAll());
+        model.addAttribute("products",productDao.getAll());
+
+        Optional<Product> oProduct = Optional.ofNullable(productDao.find(id));
         if(oProduct.isPresent()){
             Product product = oProduct.get();
             cart.add(product);
+            System.out.println(cart);
         }
-        model.addAttribute("items", productDao.getAll());
-        return "index";
+        model.addAttribute("cartItems", cart.getAll());
+        return "product/index";
     }
 
 

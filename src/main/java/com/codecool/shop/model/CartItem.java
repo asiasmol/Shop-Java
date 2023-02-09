@@ -8,14 +8,14 @@ import java.util.List;
 public class CartItem {
     private Product product;
     private BigDecimal price;
-
-
+    private String name;
     private int counter;
 
     public CartItem(Product product) {
         this.product = product;
         this.counter = 1;
         this.price = product.getDefaultPrice();
+        this.name = product.getName();
     }
 
     public void increaseCounter() {
