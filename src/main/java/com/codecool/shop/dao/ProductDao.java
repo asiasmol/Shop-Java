@@ -6,6 +6,7 @@ import com.codecool.shop.model.ProductCategory;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
 public interface ProductDao {
 

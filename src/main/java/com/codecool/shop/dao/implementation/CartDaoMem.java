@@ -1,29 +1,32 @@
 package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Product;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
-
+@Repository
 public class CartDaoMem implements CartDao {
-    private List<Product> data = new ArrayList<>();
+    private final JdbcTemplate jdbc;
 
-    public CartDaoMem(){}
+    public CartDaoMem(JdbcTemplate jdbc) {
+        this.jdbc = jdbc;
+    }
 
-    public List get(){
-        return data;
+    @Override
+    public List get() {
+        return null;
     }
 
     @Override
     public void add(Product product) {
-        data.add(product);
+
     }
 
     @Override
     public void remove(Product product) {
-        data.remove(product);
+
     }
 
     @Override

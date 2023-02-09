@@ -7,30 +7,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class Cart{
+public class Cart {
     private List<CartItem> cartItems = new ArrayList<>();
     private int counter = 0;
     private BigDecimal sum = BigDecimal.ZERO;
 
-    public void add(Product product){
+    public void add(Product product) {
         boolean notFound = true;
-        for(CartItem item : cartItems){
-            if (item.getProduct().getName().equals(product.getName())){
+        for (CartItem item : cartItems) {
+            if (item.getProduct().getName().equals(product.getName())) {
                 item.increaseCounter();
                 recalculatePriceAndCounter();
                 notFound = false;
             }
         }
-        if(notFound) {
+        if (notFound) {
             cartItems.add(new CartItem(product));
         }
     }
 
-    public void remove(Product product){
-        for(CartItem item : cartItems){
-            if(item.getProduct().getName().equals(product.getName())){
+    public void remove(Product product) {
+        for (CartItem item : cartItems) {
+            if (item.getProduct().getName().equals(product.getName())) {
                 item.decreaseCounter();
-                if(item.hasZeroItems()){
+                if (item.hasZeroItems()) {
                     cartItems.remove(item);
                 }
                 recalculatePriceAndCounter();
@@ -39,11 +39,11 @@ public class Cart{
         }
     }
 
-    private void recalculatePriceAndCounter(){
+    private void recalculatePriceAndCounter() {
         int tempCounter = 0;
         BigDecimal tempPrice = BigDecimal.ZERO;
 
-        for(CartItem item : cartItems){
+        for (CartItem item : cartItems) {
             tempCounter += item.getCounter();
             tempPrice = tempPrice.add(item.getPrice());
         }

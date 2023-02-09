@@ -1,12 +1,12 @@
-document.addEventListener("DOMContentLoaded", function (){
+document.addEventListener("DOMContentLoaded", function () {
     let creditCardCheckBox = document.getElementById("creditCardCheckBox");
     let paypalCheckBox = document.getElementById("paypalCheckBox");
     let container = document.getElementById("paymentMethod");
 
-    creditCardCheckBox.addEventListener("change", function (){
-        if(this.checked){
+    creditCardCheckBox.addEventListener("change", function () {
+        if (this.checked) {
             container.innerHTML =
-                            `<div class="row gy-3">
+                `<div class="row gy-3">
                                 <div class="col-md-6">
                                     <label for="cc-name" class="form-label">Name on card</label>
                                     <input type="text" class="form-control" id="cc-name" required="">
@@ -42,10 +42,10 @@ document.addEventListener("DOMContentLoaded", function (){
                             </div>`
         }
     })
-    paypalCheckBox.addEventListener("change", function (){
-        if(this.checked){
+    paypalCheckBox.addEventListener("change", function () {
+        if (this.checked) {
             container.innerHTML =
-            `                <div class="row gy-4">
+                `                <div class="row gy-4">
                                 <div class="col-md-6">
                                     <label for="cc-name" class="form-label">E-mail</label>
                                     <input type="email" class="form-control" id="paypalEmail" placeholder="name@domain.com" required>

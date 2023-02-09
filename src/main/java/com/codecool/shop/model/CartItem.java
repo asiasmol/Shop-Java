@@ -10,7 +10,6 @@ public class CartItem {
     private BigDecimal price;
 
 
-
     private int counter;
 
     public CartItem(Product product) {
@@ -19,32 +18,34 @@ public class CartItem {
         this.price = product.getDefaultPrice();
     }
 
-    public void increaseCounter(){
+    public void increaseCounter() {
         counter++;
         recalculate();
     }
+
     public BigDecimal getPrice() {
         return price;
     }
+
     public int getCounter() {
         return counter;
     }
 
-    public void decreaseCounter(){
+    public void decreaseCounter() {
         if (counter > 0)
-        counter--;
+            counter--;
         recalculate();
     }
 
-    private void recalculate(){
+    private void recalculate() {
         price = product.getDefaultPrice().multiply(new BigDecimal(counter));
     }
 
-    public Product getProduct(){
+    public Product getProduct() {
         return product;
     }
 
-    public boolean hasZeroItems(){
+    public boolean hasZeroItems() {
         return counter == 0;
     }
 

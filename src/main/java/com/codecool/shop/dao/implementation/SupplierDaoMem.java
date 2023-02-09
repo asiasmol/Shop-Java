@@ -2,45 +2,43 @@ package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Supplier;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
-
+@Repository
 public class SupplierDaoMem implements SupplierDao {
+    private final JdbcTemplate jdbc;
 
-    private List<Supplier> data = new ArrayList<>();
-    private static SupplierDaoMem instance = null;
-
-    /* A private Constructor prevents any other class from instantiating.
-     */
-    private SupplierDaoMem() {
-    }
-
-    public static SupplierDaoMem getInstance() {
-        if (instance == null) {
-            instance = new SupplierDaoMem();
-        }
-        return instance;
+    public SupplierDaoMem(JdbcTemplate jdbc) {
+        this.jdbc = jdbc;
     }
 
     @Override
     public void add(Supplier supplier) {
-        supplier.setId(data.size() + 1);
-        data.add(supplier);
+
     }
 
     @Override
     public Supplier find(int id) {
-        return data.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
+        return jdbc.queryForObject("SELECT * FROM supplier WHERE id = ?",
+                SupplierDaoMem::mapRow, id);
+    }
+
+    private static Supplier mapRow(ResultSet rs, int rowNum) throws SQLException {
+        return new Supplier(rs.getInt("id"),rs.getString("name"),rs.getString("description"));
     }
 
     @Override
     public void remove(int id) {
-        data.remove(find(id));
+
     }
 
     @Override
     public List<Supplier> getAll() {
-        return data;
+        return jdbc.query("SELECT * FROM supplier ORDER BY id",
+                SupplierDaoMem::mapRow);
     }
 }

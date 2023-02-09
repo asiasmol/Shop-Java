@@ -5,62 +5,64 @@ import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
-import org.springframework.stereotype.Service;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
-import java.util.stream.Collectors;
-@Service
+
+@Repository
 public class ProductDaoMem implements ProductDao {
+    private static ProductCategoryDaoMem productCategoryDaoMem;
+    private static SupplierDaoMem supplierDaoMem;
+    private final JdbcTemplate jdbc;
 
-    private List<Product> data = new ArrayList<>();
-    private static ProductDaoMem instance = null;
-
-    /* A private Constructor prevents any other class from instantiating.
-     */
-    private ProductDaoMem() {
-    }
-
-    public static ProductDaoMem getInstance() {
-        if (instance == null) {
-            instance = new ProductDaoMem();
-        }
-        return instance;
+    public ProductDaoMem(ProductCategoryDaoMem productCategoryDaoMem, SupplierDaoMem supplierDaoMem, JdbcTemplate jdbc) {
+        this.productCategoryDaoMem = productCategoryDaoMem;
+        this.supplierDaoMem = supplierDaoMem;
+        this.jdbc = jdbc;
     }
 
     @Override
     public void add(Product product) {
-        product.setId(data.size() + 1);
-        data.add(product);
+
     }
 
     @Override
     public Product find(int id) {
-        return data.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
+        return null;
     }
 
     @Override
     public Product findByName(String name) {
-        return data.stream().filter(t -> t.getName().equals(name)).findFirst().orElse(null);
+        return null;
     }
 
     @Override
     public void remove(int id) {
-        data.remove(find(id));
+
     }
 
     @Override
     public List<Product> getAll() {
-        return data;
+        return jdbc.query("SELECT * FROM products ORDER BY id",
+                ProductDaoMem::mapRow);
+    }
+
+    private static Product mapRow(ResultSet rs,int rowNum) throws SQLException {
+        return new Product(rs.getInt("id"),rs.getString("name"),rs.getBigDecimal("price"), rs.getString("currency_string"),rs.getString("description"),productCategoryDaoMem.find(rs.getInt("category_id")),supplierDaoMem.find(rs.getInt("supplier_id")) );
     }
 
     @Override
     public List<Product> getBy(Supplier supplier) {
-        return data.stream().filter(t -> t.getSupplier().equals(supplier)).collect(Collectors.toList());
+        return jdbc.query("SELECT * FROM products WHERE supplier_id = ?",
+                ProductDaoMem::mapRow, supplier.getId());
     }
 
     @Override
     public List<Product> getBy(ProductCategory productCategory) {
-        return data.stream().filter(t -> t.getProductCategory().equals(productCategory)).collect(Collectors.toList());
+        return jdbc.query("SELECT * FROM products WHERE category_id = ?",
+                ProductDaoMem::mapRow, productCategory.getId());
     }
 }

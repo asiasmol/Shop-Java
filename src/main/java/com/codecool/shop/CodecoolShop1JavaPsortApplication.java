@@ -9,6 +9,6 @@ public class CodecoolShop1JavaPsortApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CodecoolShop1JavaPsortApplication.class, args);
-	}
+    }
 
 }
