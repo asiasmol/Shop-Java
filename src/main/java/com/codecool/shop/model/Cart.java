@@ -29,10 +29,10 @@ public class  Cart {
     public void remove(Product product) {
         for (CartItem item : cartItems) {
             if (item.getProduct().getName().equals(product.getName())) {
-                item.decreaseCounter();
-                if (item.hasZeroItems()) {
+//                item.decreaseCounter();
+//                if (item.hasZeroItems()) {
                     cartItems.remove(item);
-                }
+//                }
                 recalculatePriceAndCounter();
                 break;
             }
