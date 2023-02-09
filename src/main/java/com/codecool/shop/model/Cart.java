@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class Cart {
+public class  Cart {
     private List<CartItem> cartItems = new ArrayList<>();
     private int counter = 0;
     private BigDecimal sum = BigDecimal.ZERO;

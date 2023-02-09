@@ -4,7 +4,7 @@
         <div class="col d-flex align-items-start">
             <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
                 <img class="" src="http://placehold.it/400x250/000/fff"
-                     th:attr="src='img\product_' + ${prod.id} + '.jpg'" alt=""/>
+                     th:attr="src='..\img\product_' + ${prod.id} + '.jpg'"/>
             </div>
             <div>
                 <h3 class="card-title" th:text="${prod.name}">Product name</h3>

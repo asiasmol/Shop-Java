@@ -77,5 +77,19 @@ public class ProductController {
         return "product/index";
     }
 
+    @GetMapping("/remove/{id}")
+    public String removeProductToCart(@PathVariable("id") int id, Model model) {
+        model.addAttribute("categories", productCategoryDao.getAll());
+        model.addAttribute("suppliers", supplierDao.getAll());
+        model.addAttribute("products",productDao.getAll());
+
+        Optional<Product> oProduct = Optional.ofNullable(productDao.find(id));
+        if(oProduct.isPresent()){
+            Product product = oProduct.get();
+            cart.remove(product);
+        }
+        model.addAttribute("cartItems", cart.getAll());
+        return "product/index";
+    }
 
 }
