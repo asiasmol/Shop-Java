@@ -51,5 +51,9 @@ public class Cart {
         this.sum = tempPrice;
     }
 
+    public List<CartItem> getAll(){
+        return cartItems;
+    }
+
 }
 
