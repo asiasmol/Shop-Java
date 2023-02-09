@@ -42,7 +42,7 @@ public class ProductController {
         model.addAttribute("suppliers", supplierDao.getAll());
         model.addAttribute("products",productDao.getAll());
 //        System.out.println(productDao.getAll());
-        return "product/index";
+        return "index";
     }
 
     @PostMapping("/category")
@@ -50,7 +50,7 @@ public class ProductController {
         model.addAttribute("categories", productCategoryDao.getAll());
         model.addAttribute("suppliers", supplierDao.getAll());
         model.addAttribute("products",productDao.getBy(productCategoryDao.find(categoryId)));
-        return "product/index";
+        return "index";
     }
 
     @PostMapping("/supplier")
@@ -58,7 +58,7 @@ public class ProductController {
         model.addAttribute("categories", productCategoryDao.getAll());
         model.addAttribute("suppliers", supplierDao.getAll());
         model.addAttribute("products",productDao.getBy(supplierDao.find(suppliersId)));
-        return "product/index";
+        return "index";
     }
 
     @GetMapping("/add/{productName}")
@@ -70,7 +70,7 @@ public class ProductController {
             cart.add(product);
         }
         model.addAttribute("items", productDao.getAll());
-        return "product/index";
+        return "index";
     }
 
 
