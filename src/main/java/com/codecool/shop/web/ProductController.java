@@ -69,9 +69,8 @@ public class ProductController {
         if(oProduct.isPresent()){
             Product product = oProduct.get();
             cart.add(product);
-            System.out.println(cart);
         }
-        return basicPage(model);
+        return "redirect:/";
     }
 
     @GetMapping("/remove/{id}")
@@ -81,7 +80,14 @@ public class ProductController {
             Product product = oProduct.get();
             cart.remove(product);
         }
-        return basicPage(model);
+        return "redirect:/";
+    }
+
+    @GetMapping("/clear")
+    public String clearCart(Model model){
+        this.cart.clearCart();
+        return "redirect:/";
+
     }
 
 

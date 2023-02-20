@@ -13,7 +13,7 @@
 
                                 <div class="d-flex justify-content-between align-items-center mb-4">
                                     <h3 class="fw-normal mb-0 text-black">Shopping Cart </h3>
-                                    <p th:Text ="'totalprice:' + ${totalPrice}"> ${totalPrice}"}</p>
+                                    <p th:Text ="'totalprice: ' + ${totalPrice} +'$'"> 5000$</p>
                                     <div>
                                         <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!"
                                                                                                     class="text-body">price
@@ -118,6 +118,12 @@
                                                 </a>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="container my-2 text-end">
+                                    <a href="/clear" class="btn btn-primary">Clear cart</a>
                                     </div>
                                 </div>
 

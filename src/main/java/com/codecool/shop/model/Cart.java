@@ -58,5 +58,8 @@ public class  Cart {
     public String getSum() {
         return String.valueOf(sum);
     }
+    public void clearCart(){
+        cartItems.clear();
+    }
 }
 
