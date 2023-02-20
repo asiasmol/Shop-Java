@@ -1,6 +1,5 @@
 package com.codecool.shop.web;
 
-import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
@@ -38,66 +37,51 @@ public class ProductController {
 
     @GetMapping("/")
     public String helloword(Model model) {
+        model.addAttribute("products",productDao.getAll());
+        return basicPage(model);
+    }
+
+    private String basicPage(Model model) {
         model.addAttribute("categories", productCategoryDao.getAll());
         model.addAttribute("suppliers", supplierDao.getAll());
         model.addAttribute("totalPrice", cart.getSum());
-        model.addAttribute("products",productDao.getAll());
-//        System.out.println(productDao.getAll());
+        model.addAttribute("cartItems", cart.getAll());
+        model.addAttribute("counterProducts", cart.getAll().size());
+        model.addAttribute("totalPrice", cart.getSum());
         return "index";
     }
 
     @PostMapping("/category")
     public String sortByCategory(@RequestParam("categoryId") int categoryId, Model model) {
-        model.addAttribute("categories", productCategoryDao.getAll());
-        model.addAttribute("suppliers", supplierDao.getAll());
-        model.addAttribute("totalPrice", cart.getSum());
         model.addAttribute("products",productDao.getBy(productCategoryDao.find(categoryId)));
-        return "index";
+        return basicPage(model);
     }
 
     @PostMapping("/supplier")
     public String sortBySuppliers(@RequestParam("suppliersId") int suppliersId, Model model) {
-        model.addAttribute("categories", productCategoryDao.getAll());
-        model.addAttribute("suppliers", supplierDao.getAll());
-        model.addAttribute("totalPrice", cart.getSum());
         model.addAttribute("products",productDao.getBy(supplierDao.find(suppliersId)));
-        return "index";
+        return basicPage(model);
     }
 
     @GetMapping("/add/{id}")
     public String addProductToCart(@PathVariable("id") int id, Model model) {
-
-        model.addAttribute("categories", productCategoryDao.getAll());
-        model.addAttribute("suppliers", supplierDao.getAll());
-        model.addAttribute("products",productDao.getAll());
-
         Optional<Product> oProduct = Optional.ofNullable(productDao.find(id));
         if(oProduct.isPresent()){
             Product product = oProduct.get();
             cart.add(product);
             System.out.println(cart);
         }
-        model.addAttribute("cartItems", cart.getAll());
-        model.addAttribute("counterProducts", cart.getAll().size());
-        model.addAttribute("totalPrice", cart.getSum());
-        return "index";
+        return basicPage(model);
     }
 
     @GetMapping("/remove/{id}")
     public String removeProductToCart(@PathVariable("id") int id, Model model) {
-        model.addAttribute("categories", productCategoryDao.getAll());
-        model.addAttribute("suppliers", supplierDao.getAll());
-        model.addAttribute("products",productDao.getAll());
-
         Optional<Product> oProduct = Optional.ofNullable(productDao.find(id));
         if(oProduct.isPresent()){
             Product product = oProduct.get();
             cart.remove(product);
         }
-        model.addAttribute("cartItems", cart.getAll());
-        model.addAttribute("counterProducts", cart.getAll().size());
-        model.addAttribute("totalPrice", cart.getSum());
-        return "index";
+        return basicPage(model);
     }
 
 
