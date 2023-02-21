@@ -60,8 +60,47 @@ public class ProductServiceTest {
 
     @Test
     public void testGetByCategoryId(){
+        // given
+        var category1 = new ProductCategory(1,"eee", "ddd", "eee");
+        var product1 = new Product(1, "Product 1", new BigDecimal(3), "USD", "eee", category1,supplier);
+        var products1 = List.of(product1);
 
+        //when
+        when(productDao.getBy(productCategoryDao.find(1))).thenReturn(List.of(product1));
+        List<Product> result = productService.getByCategoryId(1);
+
+        // then
+        assertEquals(products1, result);
     }
 
+    @Test
+    public void testGetBySupplierId(){
+        // given
+        var supplier = new Supplier(1,"eee", "ddd");
+        var product1 = new Product(1, "Product 1", new BigDecimal(3), "USD", "eee", category,supplier);
+        var products1 = List.of(product1);
+
+        //when
+        when(productDao.getBy(supplierDao.find(1))).thenReturn(List.of(product1));
+        List<Product> result = productService.getBySuppliers(1);
+
+        // then
+        assertEquals(products1, result);
+    }
+
+    @Test
+    public void testGetAllSuppliers(){
+        // given
+        var supplier1 = new Supplier(1,"eee", "ddd");
+        var supplier2 = new Supplier(2,"eee", "ddd");
+        var suppliers = List.of(supplier1, supplier2);
+
+        // when
+        when(supplierDao.getAll()).thenReturn(suppliers);
+        List<Supplier> result = productService.getAllSuppliers();
+
+        // then
+        assertEquals(suppliers, result);
+    }
 
 }
