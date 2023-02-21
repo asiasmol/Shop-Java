@@ -9,6 +9,7 @@ import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.service.CartService;
 import com.codecool.shop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,11 +28,13 @@ public class ProductController {
 //    private final SupplierDao supplierDao;
 //    private final Cart cart;
     private final ProductService productService;
+    private final CartService cartService;
 
 
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, CartService cartService) {
         this.productService = productService;
+        this.cartService = cartService;
     }
 
     @GetMapping("/")
@@ -43,10 +46,9 @@ public class ProductController {
     private String basicPage(Model model) {
         model.addAttribute("categories", productService.getAll());
         model.addAttribute("suppliers", productService.getAllSuppliers());
-//        model.addAttribute("totalPrice", cart.getSum());
-//        model.addAttribute("cartItems", cart.getAll());
-//        model.addAttribute("counterProducts", cart.getAll().size());
-//        model.addAttribute("totalPrice", cart.getSum());
+        model.addAttribute("totalPrice", cartService.getSum());
+        model.addAttribute("cartItems", cartService.getAll());
+        model.addAttribute("counterProducts", cartService.getAll().size());
         return "index";
     }
 
@@ -62,32 +64,32 @@ public class ProductController {
         return basicPage(model);
     }
 
-//    @GetMapping("/add/{id}")
-//    public String addProductToCart(@PathVariable("id") int id, Model model) {
-//        Optional<Product> oProduct = Optional.ofNullable(productDao.find(id));
-//        if(oProduct.isPresent()){
-//            Product product = oProduct.get();
-//            cart.add(product);
-//        }
-//        return "redirect:/";
-//    }
-//
-//    @GetMapping("/remove/{id}")
-//    public String removeProductToCart(@PathVariable("id") int id, Model model) {
-//        Optional<Product> oProduct = Optional.ofNullable(productDao.find(id));
-//        if(oProduct.isPresent()){
-//            Product product = oProduct.get();
-//            cart.remove(product);
-//        }
-//        return "redirect:/";
-//    }
-//
-//    @GetMapping("/clear")
-//    public String clearCart(Model model){
-//        this.cart.clearCart();
-//        return "redirect:/";
-//
-//    }
+    @GetMapping("/add/{id}")
+    public String addProductToCart(@PathVariable("id") int id) {
+        Optional<Product> oProduct = Optional.ofNullable(productService.find(id));
+        if(oProduct.isPresent()){
+            Product product = oProduct.get();
+            cartService.add(product);
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/remove/{id}")
+    public String removeProductToCart(@PathVariable("id") int id) {
+        Optional<Product> oProduct = Optional.ofNullable(productService.find(id));
+        if(oProduct.isPresent()){
+            Product product = oProduct.get();
+            cartService.remove(product);
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/clear")
+    public String clearCart(){
+        cartService.clearCart();
+        return "redirect:/";
+
+    }
 
 
 }

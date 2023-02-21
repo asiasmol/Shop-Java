@@ -46,4 +46,8 @@ public class ProductService {
     public List<Supplier> getAllSuppliers() {
         return supplierDao.getAll();
     }
+
+    public Product find(int id) {
+        return productDao.find(id);
+    }
 }
