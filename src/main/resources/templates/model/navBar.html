@@ -33,11 +33,11 @@
           </a>
           <ul class="dropdown-menu">
             <a>   Categories:</a>
-            <form th:action="@{/category}" method="post">
-              <li th:each="category,iterStat :${categories}" >
-                <button class="dropdown-item" name = "categoryId" type="submit" th:value="${category.getId()}"  th:text="${category.getDepartment()}">Category Title</button>
-              </li>
-            </form>
+<!--            <form th:action="@{/category}" method="post">-->
+<!--              <li th:each="category,iterStat :${categories}" >-->
+<!--                <button class="dropdown-item" name = "categoryId" type="submit" th:value="${category.getId()}"  th:text="${category.getDepartment()}">Category Title</button>-->
+<!--              </li>-->
+<!--            </form>-->
             <a>   Suppliers:</a>
             <form th:action="@{/supplier}" method="post">
               <li th:each="supplier,iterStat :${suppliers}" >
