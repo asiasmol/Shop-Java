@@ -9,4 +9,6 @@ public interface UserDao {
     User get(String email);
     List<User> getAll();
     public void add(User user);
+
+    User find(int id);
 }

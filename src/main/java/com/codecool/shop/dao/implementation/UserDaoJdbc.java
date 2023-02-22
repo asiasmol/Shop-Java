@@ -1,7 +1,6 @@
 package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.UserDao;
-import com.codecool.shop.model.Product;
 import com.codecool.shop.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -37,6 +36,12 @@ public class UserDaoJdbc implements UserDao {
 
     private static User mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new User(rs.getLong("id"),rs.getString("name"),rs.getString("surname"), rs.getString("email"),rs.getString("password"),rs.getString("address") );
+    }
+
+    @Override
+    public User find(int id) {
+        return jdbc.queryForObject("SELECT * FROM user WHERE id = ?",
+                UserDaoJdbc::mapRow, id);
     }
 
 }

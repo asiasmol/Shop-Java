@@ -1,6 +1,7 @@
 package com.codecool.shop.model;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,6 +21,15 @@ public class Order extends BaseModel {
         this.setIsPaid();
         this.setOrderDate();
 
+    }
+
+    public Order(int id, BigDecimal finalPrice, boolean isPaid, User user, List<Product> products, LocalDate dateOfOrder) {
+        super(id);
+        this.finalPrice = finalPrice;
+        this.isPaid = isPaid;
+        this.user = user;
+        this.products = products;
+        this.dateOfOrder = dateOfOrder;
     }
 
     public void setFinalPrice(List<Product> products) {
