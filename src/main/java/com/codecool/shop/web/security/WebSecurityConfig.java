@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -16,8 +15,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/","/register").permitAll()
-                        .requestMatchers("/category").hasAuthority(Roles.ADMIN)
+                        .requestMatchers("/register").permitAll()
+                        .requestMatchers("/category"+"/supplier").hasAuthority(Roles.ADMIN)
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
