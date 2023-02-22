@@ -9,10 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 @Repository
-public class SupplierDaoMem implements SupplierDao {
+public class SupplierDaoJdbc implements SupplierDao {
     private final JdbcTemplate jdbc;
 
-    public SupplierDaoMem(JdbcTemplate jdbc) {
+    public SupplierDaoJdbc(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
     }
 
@@ -24,7 +24,7 @@ public class SupplierDaoMem implements SupplierDao {
     @Override
     public Supplier find(int id) {
         return jdbc.queryForObject("SELECT * FROM supplier WHERE id = ?",
-                SupplierDaoMem::mapRow, id);
+                SupplierDaoJdbc::mapRow, id);
     }
 
     private static Supplier mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -39,6 +39,6 @@ public class SupplierDaoMem implements SupplierDao {
     @Override
     public List<Supplier> getAll() {
         return jdbc.query("SELECT * FROM supplier ORDER BY id",
-                SupplierDaoMem::mapRow);
+                SupplierDaoJdbc::mapRow);
     }
 }

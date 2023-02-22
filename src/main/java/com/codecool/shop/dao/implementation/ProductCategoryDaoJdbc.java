@@ -10,10 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 @Repository
-public class ProductCategoryDaoMem implements ProductCategoryDao {
+public class ProductCategoryDaoJdbc implements ProductCategoryDao {
     private final JdbcTemplate jdbc;
 
-    public ProductCategoryDaoMem(JdbcTemplate jdbc) {
+    public ProductCategoryDaoJdbc(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
     }
 
@@ -25,7 +25,7 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
     @Override
     public ProductCategory find(int id) {
         return jdbc.queryForObject("SELECT * FROM categories WHERE id = ?",
-                ProductCategoryDaoMem::mapRow, id);    }
+                ProductCategoryDaoJdbc::mapRow, id);    }
 
     private static ProductCategory mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new ProductCategory(rs.getInt("id"),rs.getString("name"), rs.getString("department"), rs.getString("description"));
@@ -39,6 +39,6 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
     @Override
     public List<ProductCategory> getAll() {
         return jdbc.query("SELECT * FROM categories ORDER BY id",
-                ProductCategoryDaoMem::mapRow);
+                ProductCategoryDaoJdbc::mapRow);
     }
 }

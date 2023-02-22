@@ -1,13 +1,5 @@
 package com.codecool.shop.web;
 
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.CartDaoMem;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
-import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.service.CartService;
 import com.codecool.shop.service.ProductService;
@@ -23,10 +15,7 @@ import java.util.Optional;
 
 @Controller
 public class ProductController {
-//    private final ProductDao productDao;
-//    private final ProductCategoryDao productCategoryDao;
-//    private final SupplierDao supplierDao;
-//    private final Cart cart;
+
     private final ProductService productService;
     private final CartService cartService;
 
@@ -44,7 +33,7 @@ public class ProductController {
     }
 
     private String basicPage(Model model) {
-        model.addAttribute("categories", productService.getAll());
+        model.addAttribute("categories", productService.getAllCategories());
         model.addAttribute("suppliers", productService.getAllSuppliers());
         model.addAttribute("totalPrice", cartService.getSum());
         model.addAttribute("cartItems", cartService.getAll());

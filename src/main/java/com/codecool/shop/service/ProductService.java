@@ -50,4 +50,8 @@ public class ProductService {
     public Product find(int id) {
         return productDao.find(id);
     }
+
+    public List<ProductCategory> getAllCategories() {
+        return productCategoryDao.getAll();
+    }
 }
