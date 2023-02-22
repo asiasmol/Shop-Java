@@ -13,10 +13,12 @@ import java.util.List;
 public class OrderDaoJdbc implements OrderDao{
 
     private final JdbcTemplate jdbc;
-    private static UserDaoJdbc userDaoJdbc;
+    private static ProductDaoJdbc productDaoJdbc;
 
-    public OrderDaoJdbc(JdbcTemplate jdbc) {
+
+    public OrderDaoJdbc(JdbcTemplate jdbc, ProductDaoJdbc productDaoJdbc) {
         this.jdbc = jdbc;
+        this.productDaoJdbc = productDaoJdbc;
     }
 
     @Override
@@ -32,6 +34,6 @@ public class OrderDaoJdbc implements OrderDao{
     }
 
     private static Order mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return new Order(rs.getInt("id"), );
+        return new Order(rs.getInt("id"), rs.getInt("user_id"), productDaoJdbc.getProductsByIds(rs.getArray("products")));
     }
 }
