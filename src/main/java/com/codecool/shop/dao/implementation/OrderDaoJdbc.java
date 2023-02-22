@@ -27,13 +27,8 @@ public class OrderDaoMem  implements OrderDao{
 
     @Override
     public List<Order> getOrdersBy(int user_id) {
-        return null;
-    }
-
-    @Override
-    public List<Order> getOrdersBy(User user) {
         return jdbc.query("SELECT * FROM orders WHERE user_id = ? ORDER BY date ",
-                OrderDaoMem::mapRow, user.getId());
+                OrderDaoMem::mapRow);
     }
 
     private static Order mapRow(ResultSet rs, int rowNum) throws SQLException {
