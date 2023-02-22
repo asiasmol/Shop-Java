@@ -6,10 +6,8 @@ import com.codecool.shop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -27,7 +25,10 @@ public class ProductController {
     }
 
     @GetMapping("/")
-    public String helloWorld(Model model) {
+    public String helloWorld(Model model,@ModelAttribute("acountExistError") String acountExistError,@ModelAttribute("wrongLoginDataError") String wrongLoginDataError) {
+        model.addAttribute("acountExistError",acountExistError);
+        model.addAttribute("wrongLoginDataError",wrongLoginDataError);
+        System.out.println(wrongLoginDataError);
         model.addAttribute("products", productService.getAll());
         return basicPage(model);
     }
@@ -41,13 +42,13 @@ public class ProductController {
         return "index";
     }
 
-    @PostMapping("/category")
+    @GetMapping("/category")
     public String sortByCategory(@RequestParam("categoryId") int categoryId, Model model) {
         model.addAttribute("products", productService.getByCategoryId(categoryId));
         return basicPage(model);
     }
 
-    @PostMapping("/supplier")
+    @GetMapping("/supplier")
     public String sortBySuppliers(@RequestParam("suppliersId") int suppliersId, Model model) {
         model.addAttribute("products",productService.getBySuppliers(suppliersId));
         return basicPage(model);

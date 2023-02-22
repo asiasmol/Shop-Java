@@ -6,7 +6,7 @@
             </a>
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="#" class="nav-link px-2 link-secondary">
+        <li><a href="/" class="nav-link px-2 link-secondary">
           <img src="/img/logo1.png" alt="logo" class="foto"></a></li>
         <li><a href="#" class="nav-link px-2 link-secondary"></a></li>
         <li class="nav-item" style="display: flex">
@@ -33,13 +33,13 @@
           </a>
           <ul class="dropdown-menu">
             <a>   Categories:</a>
-            <form th:action="@{/category}" method="post">
+            <form th:action="@{/category}" method="get">
               <li th:each="category,iterStat :${categories}" >
                 <button class="dropdown-item" name = "categoryId" type="submit" th:value="${category.getId()}" th:text="${category.getDepartment()}" >Category Title</button>
               </li>
             </form>
             <a>   Suppliers:</a>
-            <form th:action="@{/supplier}" method="post">
+            <form th:action="@{/supplier}" method="get">
               <li th:each="supplier,iterStat :${suppliers}" >
                 <button class="dropdown-item" name = "suppliersId" type="submit" th:value="${supplier.getId()}"  th:text="${supplier.getName()}">Category Title</button>
               </li>
@@ -54,7 +54,7 @@
                 <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
             </form>
 
-            <div class="text-end">
+            <div class="text-end" th:if="${#authentication.getName() == 'anonymousUser'}">
                 <button type="button" class="btn btn-light text-dark me-2" data-bs-toggle="modal"
                         data-bs-target="#login-modal">Login
                 </button>
@@ -62,6 +62,14 @@
                     in
                 </button>
             </div>
+            <form th:action="@{/logout}" method="post">
+            <div class="text-end" th:if="${#authentication.getName() != 'anonymousUser'}">
+                <button type="button" class="btn btn-primary" >Profile
+                </button>
+                <button type="submit" class="btn btn-light text-dark me-2" >Logout
+                </button>
+            </div>
+            </form>
         </div>
     </div>
 </header>

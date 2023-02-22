@@ -19,14 +19,14 @@
                                                          style="width: 185px;" alt="logo">
                                                     <h4 class="mt-1 mb-5 pb-1">We are The Lotus Team</h4>
                                                 </div>
-
+                                                <div id="loginError" th:if="${wrongLoginDataError != null }" style="color: red" th:text ="${wrongLoginDataError}"></div>
                                                 <form th:action="@{/login}" method="post">
                                                     <p>Please login to your account</p>
 
                                                     <div class="form-outline mb-4">
                                                         <input type="email" id="form2Example11" name="username" class="form-control"
                                                                placeholder="Phone number or email address"required/>
-                                                        <label class="form-label" for="form2Example11">Username</label>
+                                                        <label class="form-label" for="form2Example11">Email</label>
                                                     </div>
 
                                                     <div class="form-outline mb-4">
@@ -45,7 +45,7 @@
 
                                                     <div class="d-flex align-items-center justify-content-center pb-4">
                                                         <p class="mb-0 me-2">Don't have an account?</p>
-                                                        <button type="button" class="btn btn-outline-danger">Create
+                                                        <button type="button" id="create-account" class="btn btn-outline-danger">Create
                                                             new
                                                         </button>
                                                     </div>

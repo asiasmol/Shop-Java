@@ -14,10 +14,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
@@ -29,14 +32,16 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userDao.get(email);
-        if (user == null) {
-            throw new UsernameNotFoundException(email);
-        }
-        List<GrantedAuthority> authorities = Collections.emptyList();
-        if(user.isAdmin()) {
-            authorities = AuthorityUtils.createAuthorityList(Roles.ADMIN);
-        }
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),authorities);
+            Optional<User> user = userDao.get(email);
+            if (user.isEmpty()) {
+                throw new UsernameNotFoundException(email);
+            }
+            User user1 = user.get();
+            List<GrantedAuthority> authorities = Collections.emptyList();
+            if (user1.isAdmin()) {
+                authorities = AuthorityUtils.createAuthorityList(Roles.ADMIN);
+            }
+            return new org.springframework.security.core.userdetails.User(user1.getId().toString(), user1.getPassword(), authorities);
+
     }
 }

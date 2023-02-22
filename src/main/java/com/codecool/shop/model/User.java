@@ -56,4 +56,8 @@ public class User {
     public String getAddress() {
         return addres;
     }
+
+    public Long getId() {
+        return id;
+    }
 }

@@ -15,16 +15,19 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/register").permitAll()
-                        .requestMatchers("/category"+"/supplier").hasAuthority(Roles.ADMIN)
-                        .anyRequest().authenticated()
+                        .requestMatchers("/register","/**","/login").permitAll()
                 )
                 .formLogin((form) -> form
                 .loginPage("/login")
                 .permitAll())
-                .logout((logout) -> logout.permitAll());
+                .logout((logout) -> logout.permitAll()
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID"));
         return http.build();
     }
+
 
 
 }

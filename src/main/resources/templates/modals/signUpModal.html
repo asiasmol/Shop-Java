@@ -1,4 +1,4 @@
-<div class="modal fade" id="signin-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+<div class="modal fade" id="signin-modal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
      th:fragment="singUpModal">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -112,6 +112,7 @@
                                                 <button type="submit" class="btn btn-primary mb-4 center-block">
                                                     Sign up
                                                 </button>
+                                                <div id="registerError" th:if="${acountExistError != null }" style="color: red" th:text ="${acountExistError}"></div>
                                             </div>
                                         </form>
                                     </div>

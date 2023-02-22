@@ -1,7 +1,28 @@
+function showRegisterModalWhenError(registationError) {
+    if (registationError.innerHTML === "this account already exist!") {
+        $('#signin-modal').modal('show');
+    }
+}
+function showLoginModalWhenError(loginError) {
+    if (loginError.innerHTML === "wrong eamil or password!") {
+        $('#login-modal').modal('show');
+    }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+    let registationError = document.getElementById("registerError")
+    let loginError = document.getElementById("loginError")
+    let newAccountButton = document.getElementById("create-account")
     let creditCardCheckBox = document.getElementById("creditCardCheckBox");
     let paypalCheckBox = document.getElementById("paypalCheckBox");
     let container = document.getElementById("paymentMethod");
+    showRegisterModalWhenError(registationError);
+    showLoginModalWhenError(loginError);
+
+    newAccountButton.addEventListener('click',function (){
+        $('#signin-modal').modal('show');
+        $('#login-modal').modal('hide');
+    });
 
     creditCardCheckBox.addEventListener("change", function () {
         if (this.checked) {

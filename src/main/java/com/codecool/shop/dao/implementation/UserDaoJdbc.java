@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public class UserDaoJdbc implements UserDao {
     private final JdbcTemplate jdbc;
@@ -23,9 +25,13 @@ public class UserDaoJdbc implements UserDao {
                 user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getAddress());
     }
     @Override
-    public User get(String email) {
-        return jdbc.queryForObject("SELECT * FROM users WHERE email = ?",
-                UserDaoJdbc::mapRow, email);
+    public Optional<User> get(String email) {
+        try{
+            return  Optional.ofNullable(jdbc.queryForObject("SELECT * FROM users WHERE email = ?",
+                    UserDaoJdbc::mapRow, email));
+        }catch (Exception e){
+            return Optional.empty();
+        }
     }
 
 

@@ -3,10 +3,11 @@ package com.codecool.shop.dao;
 import com.codecool.shop.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserDao {
 
-    User get(String email);
+    Optional<User> get(String email);
     List<User> getAll();
     public void add(User user);
 }
