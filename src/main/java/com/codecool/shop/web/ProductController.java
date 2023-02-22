@@ -3,10 +3,10 @@ package com.codecool.shop.web;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.CartDaoMem;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.implementation.CartDaoJdbc;
+import com.codecool.shop.dao.implementation.ProductCategoryDaoJdbc;
+import com.codecool.shop.dao.implementation.ProductDaoJdbc;
+import com.codecool.shop.dao.implementation.SupplierDaoJdbc;
 import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class ProductController {
 
 
     @Autowired
-    public ProductController(Cart cart, ProductDaoMem productDao, ProductCategoryDaoMem productCategoryDao, SupplierDaoMem supplierDao, CartDaoMem cartDao) {
+    public ProductController(Cart cart, ProductDaoJdbc productDao, ProductCategoryDaoJdbc productCategoryDao, SupplierDaoJdbc supplierDao, CartDaoJdbc cartDao) {
         this.productDao = productDao;
         this.productCategoryDao = productCategoryDao;
         this.supplierDao = supplierDao;

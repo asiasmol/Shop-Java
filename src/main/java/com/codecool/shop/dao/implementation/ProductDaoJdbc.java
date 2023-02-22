@@ -13,13 +13,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class ProductDaoMem implements ProductDao {
-    private static ProductCategoryDaoMem productCategoryDaoMem;
-    private static SupplierDaoMem supplierDaoMem;
+public class ProductDaoJdbc implements ProductDao {
+    private static ProductCategoryDaoJdbc productCategoryDaoJdbc;
+    private static SupplierDaoJdbc supplierDaoMem;
     private final JdbcTemplate jdbc;
 
-    public ProductDaoMem(ProductCategoryDaoMem productCategoryDaoMem, SupplierDaoMem supplierDaoMem, JdbcTemplate jdbc) {
-        this.productCategoryDaoMem = productCategoryDaoMem;
+    public ProductDaoJdbc(ProductCategoryDaoJdbc productCategoryDaoJdbc, SupplierDaoJdbc supplierDaoMem, JdbcTemplate jdbc) {
+        this.productCategoryDaoJdbc = productCategoryDaoJdbc;
         this.supplierDaoMem = supplierDaoMem;
         this.jdbc = jdbc;
     }
@@ -32,7 +32,7 @@ public class ProductDaoMem implements ProductDao {
     @Override
     public Product find(int id) {
         return jdbc.queryForObject("SELECT * FROM products WHERE id = ?",
-                ProductDaoMem::mapRow, id);
+                ProductDaoJdbc::mapRow, id);
     }
 
     @Override
@@ -48,22 +48,22 @@ public class ProductDaoMem implements ProductDao {
     @Override
     public List<Product> getAll() {
         return jdbc.query("SELECT * FROM products ORDER BY id",
-                ProductDaoMem::mapRow);
+                ProductDaoJdbc::mapRow);
     }
 
     private static Product mapRow(ResultSet rs,int rowNum) throws SQLException {
-        return new Product(rs.getInt("id"),rs.getString("name"),rs.getBigDecimal("price"), rs.getString("currency_string"),rs.getString("description"),productCategoryDaoMem.find(rs.getInt("category_id")),supplierDaoMem.find(rs.getInt("supplier_id")) );
+        return new Product(rs.getInt("id"),rs.getString("name"),rs.getBigDecimal("price"), rs.getString("currency_string"),rs.getString("description"), productCategoryDaoJdbc.find(rs.getInt("category_id")),supplierDaoMem.find(rs.getInt("supplier_id")) );
     }
 
     @Override
     public List<Product> getBy(Supplier supplier) {
         return jdbc.query("SELECT * FROM products WHERE supplier_id = ?",
-                ProductDaoMem::mapRow, supplier.getId());
+                ProductDaoJdbc::mapRow, supplier.getId());
     }
 
     @Override
     public List<Product> getBy(ProductCategory productCategory) {
         return jdbc.query("SELECT * FROM products WHERE category_id = ?",
-                ProductDaoMem::mapRow, productCategory.getId());
+                ProductDaoJdbc::mapRow, productCategory.getId());
     }
 }
