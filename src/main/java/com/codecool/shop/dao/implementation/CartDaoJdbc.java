@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public class CartDaoMem implements CartDao {
+public class CartDaoJdbc implements CartDao {
     private final JdbcTemplate jdbc;
 
-    public CartDaoMem(JdbcTemplate jdbc) {
+    public CartDaoJdbc(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
     }
 

@@ -23,10 +23,7 @@ import java.util.Optional;
 
 @Controller
 public class ProductController {
-//    private final ProductDao productDao;
-//    private final ProductCategoryDao productCategoryDao;
-//    private final SupplierDao supplierDao;
-//    private final Cart cart;
+
     private final ProductService productService;
     private final CartService cartService;
 
