@@ -8,5 +8,5 @@ public interface OrderDao {
 
     List<Order> add(Order order);
 
-    List<Order> getOrdersBy(int user_id);
+    List<Order> getOrdersBy(int userId);
 }

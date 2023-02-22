@@ -21,17 +21,17 @@ public class OrderDaoJdbc implements OrderDao{
 
     @Override
     public List<Order> add(Order order) {
-        return jdbc.query("INSERT INTO orders VALUES id = ?, user_id = ?, products = ?, data = ?, final_price = ?, is_paid = ?",
-                OrderDaoJdbc::mapRow, order.getId(), order.getUser().getId(), order.getProducts(), order.getDateOfOrder(), order.getFinalPrice(), order.isPaid());
+        return jdbc.query("INSERT INTO orders VALUES id = ?, user_email = ?, products = ?, data = ?, final_price = ?, is_paid = ?",
+                OrderDaoJdbc::mapRow, order.getId(), order.getUserId(), order.getProducts(), order.getDateOfOrder(), order.getFinalPrice(), order.isPaid());
     }
 
     @Override
-    public List<Order> getOrdersBy(int user_id) {
+    public List<Order> getOrdersBy(int userId) {
         return jdbc.query("SELECT * FROM orders WHERE user_id = ? ORDER BY date ",
-                OrderDaoJdbc::mapRow);
+                OrderDaoJdbc::mapRow, userId);
     }
 
     private static Order mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return new Order(rs.getInt("id"),userDaoJdbc.find(rs.getInt("user_id")),rs.getObject("products"), rs.getDate("data"),rs.getBigDecimal("final_price"),rs.getBoolean("is_paid"));
+        return new Order(rs.getInt("id"), );
     }
 }

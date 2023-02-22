@@ -1,7 +1,6 @@
 package com.codecool.shop.model;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -9,27 +8,18 @@ public class Order extends BaseModel {
 
     private BigDecimal finalPrice;
     private boolean isPaid;
-    private User user;
+    private int userId;
     private List<Product> products;
     private LocalDate dateOfOrder;
 
 
-    public Order(int id, User user, List<Product> products) {
+    public Order(int id, int userId, List<Product> products) {
         super(id);
-        this.user = user;
-        this.setFinalPrice(products);
-        this.setIsPaid();
-        this.setOrderDate();
-
-    }
-
-    public Order(int id, BigDecimal finalPrice, boolean isPaid, User user, List<Product> products, LocalDate dateOfOrder) {
-        super(id);
-        this.finalPrice = finalPrice;
-        this.isPaid = isPaid;
-        this.user = user;
+        this.isPaid = false;
+        this.userId = userId;
         this.products = products;
-        this.dateOfOrder = dateOfOrder;
+        setOrderDate();
+        setFinalPrice(products);
     }
 
     public void setFinalPrice(List<Product> products) {
@@ -37,7 +27,7 @@ public class Order extends BaseModel {
     }
 
     public void setIsPaid(){
-
+        isPaid = true;
     }
 
     public BigDecimal getFinalPrice() {
@@ -48,8 +38,8 @@ public class Order extends BaseModel {
         return isPaid;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
     public List<Product> getProducts() {
@@ -60,7 +50,7 @@ public class Order extends BaseModel {
         return dateOfOrder;
     }
 
-    public void setOrderDate(){
+    private void setOrderDate(){
         dateOfOrder = LocalDate.now();
     }
 

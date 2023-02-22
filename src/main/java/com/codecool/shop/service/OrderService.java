@@ -8,10 +8,9 @@ import java.util.List;
 public class OrderService {
 
     private OrderDao orderDao;
-    private User user;
 
-    public List<Order> getOrdersBy(int user_id) {
-        return orderDao.getOrdersBy(user_id);
+    public List<Order> getOrdersBy(int userId) {
+        return orderDao.getOrdersBy(userId);
     }
 
 

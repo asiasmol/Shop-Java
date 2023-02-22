@@ -19,7 +19,7 @@ CREATE TABLE users
 CREATE TABLE orders
 (
     id          serial PRIMARY KEY,
-    user_id     integer REFERENCES users (id),
+    user_email  text REFERENCES users (email),
     products    text,
     data        date,
     final_price integer,
