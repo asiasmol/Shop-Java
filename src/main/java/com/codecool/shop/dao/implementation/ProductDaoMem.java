@@ -45,6 +45,8 @@ public class ProductDaoMem implements ProductDao {
 
     }
 
+
+
     @Override
     public List<Product> getAll() {
         return jdbc.query("SELECT * FROM products ORDER BY id",
