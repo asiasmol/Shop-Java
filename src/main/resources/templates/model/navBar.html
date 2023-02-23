@@ -64,8 +64,7 @@
             </div>
             <form th:action="@{/logout}" method="post">
             <div class="text-end" th:if="${#authentication.getName() != 'anonymousUser'}">
-                <button type="button" class="btn btn-primary" >Profile
-                </button>
+                <a href="/profile" class="btn btn-primary">Profile</a>
                 <button type="submit" class="btn btn-light text-dark me-2" >Logout
                 </button>
             </div>

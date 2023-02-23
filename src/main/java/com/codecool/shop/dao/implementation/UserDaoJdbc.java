@@ -34,6 +34,16 @@ public class UserDaoJdbc implements UserDao {
         }
     }
 
+    @Override
+    public Optional<User> getById(int id) {
+        try{
+            return Optional.ofNullable(jdbc.queryForObject("SELECT * FROM users WHERE id=?",
+                    UserDaoJdbc::mapRow, id));
+        }catch (Exception e){
+            return Optional.empty();
+        }
+    }
+
 
     @Override
     public List<User> getAll() {
