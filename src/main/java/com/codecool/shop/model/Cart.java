@@ -58,6 +58,15 @@ public class  Cart {
     public String getSum() {
         return String.valueOf(sum);
     }
+
+    public BigDecimal getSumBigDecimal(){
+        return sum;
+    }
+
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
+
     public void clearCart(){
         cartItems.clear();
         recalculatePriceAndCounter();
