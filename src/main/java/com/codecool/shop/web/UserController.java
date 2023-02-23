@@ -2,6 +2,7 @@ package com.codecool.shop.web;
 
 import com.codecool.shop.dao.implementation.UserDaoJdbc;
 import com.codecool.shop.model.User;
+import com.codecool.shop.service.MyUserDetailsService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,13 +17,14 @@ import java.util.Optional;
 @Controller
 public class UserController {
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private MyUserDetailsService userService;
 
     private UserDaoJdbc userDao;
 
-    public UserController(UserDaoJdbc userDao, BCryptPasswordEncoder encoder) {
+    public UserController(UserDaoJdbc userDao,MyUserDetailsService userService) {
+        this.userService = userService;
         this.userDao = userDao;
-        this.bCryptPasswordEncoder = encoder;
     }
 
     @PostMapping("/register")
@@ -31,13 +33,12 @@ public class UserController {
                                           @RequestParam("email") String email,
                                           @RequestParam("address") String address,
                                           @RequestParam("password") String password){
-            Optional<User> user = userDao.get(email);
-            if(user.isEmpty()){
-                String encodedPassword = bCryptPasswordEncoder.encode(password);
-                userDao.add(new User(firstname,lastName,email,encodedPassword,address));
-            } else {
+
+        if(userService.registration(firstname,lastName,email,password,address)){
+            redirectAttributes.addFlashAttribute("registrationSucces", "Registration is Succes!");
+        }else {
             redirectAttributes.addFlashAttribute("acountExistError", "this account already exist!");
-            }
+        }
         return "redirect:/";
     }
     @GetMapping("/logout")

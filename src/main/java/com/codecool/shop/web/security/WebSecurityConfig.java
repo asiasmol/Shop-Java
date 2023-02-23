@@ -16,6 +16,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/register","/**","/login").permitAll()
+                        .requestMatchers("/profile").hasAuthority(Roles.USER)
                 )
                 .formLogin((form) -> form
                 .loginPage("/login")
