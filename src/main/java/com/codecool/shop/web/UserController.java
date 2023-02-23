@@ -1,10 +1,11 @@
 package com.codecool.shop.web;
 
 import com.codecool.shop.dao.implementation.UserDaoJdbc;
-import com.codecool.shop.model.User;
+import com.codecool.shop.model.User.User;
+import com.codecool.shop.service.EmailService;
 import com.codecool.shop.service.MyUserDetailsService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,18 +14,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 public class UserController {
 
 
     private MyUserDetailsService userService;
+    private EmailService emailService;
 
     private UserDaoJdbc userDao;
 
-    public UserController(UserDaoJdbc userDao,MyUserDetailsService userService) {
+    public UserController(UserDaoJdbc userDao, MyUserDetailsService userService, EmailService emailService) {
         this.userService = userService;
         this.userDao = userDao;
+        this.emailService = emailService;
     }
 
     @PostMapping("/register")
@@ -57,4 +61,9 @@ public class UserController {
         model.addAttribute("user", user);
         return "profile";
     }
+    @GetMapping("/forgotPassword")
+    public String forgetpassword(){
+        return "forgotPassword";
+    }
+
 }
