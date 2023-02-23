@@ -10,10 +10,15 @@ import java.util.List;
 
 @Component
 @Scope(value="session", proxyMode= ScopedProxyMode.TARGET_CLASS)
-public class  Cart {
+public class Cart {
     private List<CartItem> cartItems = new ArrayList<>();
     private int counter = 0;
     private BigDecimal sum = BigDecimal.ZERO;
+
+    public Cart(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
+        recalculatePriceAndCounter();
+    }
 
     public void add(Product product) {
         boolean notFound = true;

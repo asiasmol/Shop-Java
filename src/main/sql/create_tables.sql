@@ -23,7 +23,7 @@ CREATE TABLE orders
     products    text,
     data        date,
     final_price integer,
-    is_paid     bit
+    is_paid     boolean
 );
 
 CREATE TABLE categories
@@ -58,5 +58,7 @@ INSERT INTO supplier VALUES (1,'Lenovo','Computers');
 INSERT INTO products VALUES (0,'Amazon Fire','49.9','USD','Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.',0,0);
 INSERT INTO products VALUES (1,'Lenovo IdeaPad Miix 700','479','USD','Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.',1,1);
 INSERT INTO products VALUES (2,'Amazon Fire HD 8','89','USD','Amazon''s latest Fire HD 8 tablet is a great value for media consumption.',0,0);
+
+
 
 

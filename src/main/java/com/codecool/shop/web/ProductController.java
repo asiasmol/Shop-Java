@@ -2,12 +2,13 @@ package com.codecool.shop.web;
 
 import com.codecool.shop.model.Product;
 import com.codecool.shop.service.CartService;
+import com.codecool.shop.service.OrderService;
 import com.codecool.shop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -16,12 +17,16 @@ public class ProductController {
 
     private final ProductService productService;
     private final CartService cartService;
+    private final OrderService orderService;
+
+
 
 
     @Autowired
-    public ProductController(ProductService productService, CartService cartService) {
+    public ProductController(ProductService productService, CartService cartService, OrderService orderService) {
         this.productService = productService;
         this.cartService = cartService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/")
@@ -43,6 +48,7 @@ public class ProductController {
         model.addAttribute("totalPrice", cartService.getSum());
         model.addAttribute("cartItems", cartService.getAll());
         model.addAttribute("counterProducts", cartService.getAll().size());
+
         return "index";
     }
 

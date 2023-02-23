@@ -4,19 +4,21 @@ package com.codecool.shop.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Order extends BaseModel{
+public class Order{
     private int userId;
     private Cart cart;
     private LocalDate date;
     private BigDecimal finalPrice;
     private boolean isPaid;
 
-    public Order(int id, Cart cart) {
-        super(id);
+    public Order(int userId, Cart cart) {
+        this.userId = userId;
         this.cart = cart;
         this.finalPrice = cart.getSumBigDecimal();
-
+        setDate();
     }
+
+
 
     public void isPaid(){
         this.isPaid = true;
@@ -31,7 +33,9 @@ public class Order extends BaseModel{
     }
 
     public String getProducts() {
-        return cart.getCartItems().stream().map(cartItem -> cartItem.getProduct().getId()).toList().toString();
+        StringBuilder stringBuilder = new StringBuilder();
+        cart.getCartItems().forEach(cartItem -> stringBuilder.append(cartItem.getProduct().getId()));
+        return stringBuilder.toString();
     }
 
     public LocalDate getDate() {

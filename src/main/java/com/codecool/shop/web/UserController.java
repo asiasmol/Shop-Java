@@ -2,6 +2,7 @@ package com.codecool.shop.web;
 
 import com.codecool.shop.dao.implementation.UserDaoJdbc;
 import com.codecool.shop.model.User;
+import com.codecool.shop.service.OrderService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -18,11 +19,13 @@ public class UserController {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    private final OrderService orderService;
     private UserDaoJdbc userDao;
 
-    public UserController(UserDaoJdbc userDao, BCryptPasswordEncoder encoder) {
+    public UserController(UserDaoJdbc userDao, BCryptPasswordEncoder encoder, OrderService orderService) {
         this.userDao = userDao;
         this.bCryptPasswordEncoder = encoder;
+        this.orderService = orderService;
     }
 
     @PostMapping("/register")
@@ -54,6 +57,7 @@ public class UserController {
         int userId = Integer.parseInt(SecurityContextHolder.getContext().getAuthentication().getName());
         User user = userDao.getById(userId).get();
         model.addAttribute("user", user);
+        model.addAttribute("orders", orderService.getAllOrdersForUser(userId));
         return "profile";
     }
 }

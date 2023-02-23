@@ -37,4 +37,8 @@ public class CartService {
     public void clearCart() {
         cart.clearCart();
     }
+
+    public Cart get() {
+        return cart;
+    }
 }

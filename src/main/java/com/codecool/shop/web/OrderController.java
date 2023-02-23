@@ -1,24 +1,32 @@
 package com.codecool.shop.web;
 
-import com.codecool.shop.model.Product;
+import com.codecool.shop.model.Cart;
+import com.codecool.shop.model.CartItem;
+import com.codecool.shop.model.Order;
+import com.codecool.shop.service.CartService;
 import com.codecool.shop.service.OrderService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Optional;
+import java.util.List;
 
 @Controller
 public class OrderController {
     private final OrderService orderService;
+    private final CartService cartService;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, CartService cartService) {
         this.orderService = orderService;
+        this.cartService = cartService;
     }
 
-    @GetMapping("/add/order/{id}")
-    public String addOrderToOrderHistory(@PathVariable("id") int id){
-        Optional<Product> oProduct = Optional.ofNullable(orderService.add(order));
-        return null;
+    @PostMapping("/order")
+    public String saveOrder(){
+        String id = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println(id);
+        orderService.add(new Order(Integer.parseInt(id),cartService.get()));
+        return "redirect:/";
     }
+
 }

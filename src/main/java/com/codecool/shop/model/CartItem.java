@@ -49,5 +49,13 @@ public class CartItem {
         return counter == 0;
     }
 
-
+    @Override
+    public String toString() {
+        return "CartItem{" +
+                "product=" + product +
+                ", price=" + price +
+                ", name='" + name + '\'' +
+                ", counter=" + counter +
+                '}';
+    }
 }

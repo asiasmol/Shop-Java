@@ -94,6 +94,12 @@
                 <p class="text-muted mb-0" th:text="${user.getAddres()}">Bay Area, San Francisco, CA</p>
               </div>
             </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-toggle="modal" data-bs-target="#order-history">Order History</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -106,11 +112,11 @@
 
 <div th:replace="~{model/footer}"></div>
 
-
 <div th:replace="~{modals/paymentModal}"></div>
 <div th:replace="~{modals/myCartModal}"></div>
 <div th:replace="~{modals/loginModal}"></div>
 <div th:replace="~{modals/signUpModal}"></div>
+<div th:replace="~{modals/orderHistoryModal}"></div>
 
 
 <div th:replace="~{modals/bio/asiaModal}"></div>
