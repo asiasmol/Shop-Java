@@ -18,9 +18,9 @@ public class ForgotPasswordController {
     @PostMapping("/forgotPassword")
     public String processForgotPasswordForm(@RequestParam("email") String userEmail, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         if(userService.forgotPassword(userEmail,request)){
-            redirectAttributes.addFlashAttribute("registrationSucces", "Registration is Succes!");
+            redirectAttributes.addFlashAttribute("sendSucces", "mail Send :)");
         }else{
-            redirectAttributes.addFlashAttribute("registrationSucces", "Registration is Succes!");
+            redirectAttributes.addFlashAttribute("sendError", "Wrong email!");
         }
         return "redirect:/";
     }
