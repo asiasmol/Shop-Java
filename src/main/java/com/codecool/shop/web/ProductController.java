@@ -25,9 +25,13 @@ public class ProductController {
     }
 
     @GetMapping("/")
-    public String helloWorld(Model model,@ModelAttribute("acountExistError") String acountExistError,@ModelAttribute("wrongLoginDataError") String wrongLoginDataError) {
+    public String helloWorld(Model model,
+                             @ModelAttribute("acountExistError") String acountExistError,
+                             @ModelAttribute("wrongLoginDataError") String wrongLoginDataError,
+                             @ModelAttribute("registrationSucces") String registrationSucces) {
         model.addAttribute("acountExistError",acountExistError);
         model.addAttribute("wrongLoginDataError",wrongLoginDataError);
+        model.addAttribute("registrationSucces",registrationSucces);
         System.out.println(wrongLoginDataError);
         model.addAttribute("products", productService.getAll());
         return basicPage(model);

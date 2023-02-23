@@ -8,16 +8,23 @@ function showLoginModalWhenError(loginError) {
         $('#login-modal').modal('show');
     }
 }
+function showLoginModalRegistrationSucces(registrationSucces) {
+    if (registrationSucces.innerHTML === "Registration is Succes!") {
+        $('#login-modal').modal('show');
+    }
+}
 
 document.addEventListener("DOMContentLoaded", function () {
     let registationError = document.getElementById("registerError")
     let loginError = document.getElementById("loginError")
+    let registrationSucces = document.getElementById("registrationSucces")
     let newAccountButton = document.getElementById("create-account")
     let creditCardCheckBox = document.getElementById("creditCardCheckBox");
     let paypalCheckBox = document.getElementById("paypalCheckBox");
     let container = document.getElementById("paymentMethod");
     showRegisterModalWhenError(registationError);
     showLoginModalWhenError(loginError);
+    showLoginModalRegistrationSucces(registrationSucces);
 
     newAccountButton.addEventListener('click',function (){
         $('#signin-modal').modal('show');

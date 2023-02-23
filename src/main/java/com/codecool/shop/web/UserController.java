@@ -36,8 +36,12 @@ public class UserController {
             if(user.isEmpty()){
                 String encodedPassword = bCryptPasswordEncoder.encode(password);
                 userDaoJdbc.add(new User(firstname,lastName,email,encodedPassword,address));
+                redirectAttributes.addFlashAttribute("registrationSucces", "Registration is Succes!");
+
             }
-            redirectAttributes.addFlashAttribute("acountExistError", "this account already exist!");
+            else{
+                redirectAttributes.addFlashAttribute("acountExistError", "this account already exist!");
+            }
             return "redirect:/";
 
     }
