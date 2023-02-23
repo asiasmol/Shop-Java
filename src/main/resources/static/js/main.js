@@ -1,3 +1,4 @@
+
 function showRegisterModalWhenError(registationError) {
     if (registationError.innerHTML === "this account already exist!") {
         $('#signin-modal').modal('show');
@@ -13,11 +14,30 @@ function showLoginModalRegistrationSucces(registrationSucces) {
         $('#login-modal').modal('show');
     }
 }
+function showForgetPasswordModalsendError(sendError) {
+    if (sendError.innerHTML === "Wrong email!") {
+        $('#pwdModal').modal('show');
+    }
+}
+function showForgetPasswordModalsendSucces(sendSucces) {
+    if (sendSucces.innerHTML === "mail Send :)") {
+        $('#pwdModal').modal('show');
+    }
+}
+function showLoginModalResetPasswordSucces(resetPassword) {
+    if (resetPassword.innerHTML === "Your Password Reset Succesfoul ;D") {
+        $('#login-modal').modal('show');
+    }
+}
 
 document.addEventListener("DOMContentLoaded", function () {
-    let registationError = document.getElementById("registerError")
-    let loginError = document.getElementById("loginError")
-    let registrationSucces = document.getElementById("registrationSucces")
+    let sendError = document.getElementById("send-Error")
+    let resetPassword = document.getElementById("reset-password-succes")
+    let sendSucces = document.getElementById("send-Succes")
+    let registationError = document.getElementById("register-Error")
+    let loginError = document.getElementById("login-Error")
+    let forgetpassword = document.getElementById("forget-password")
+    let registrationSucces = document.getElementById("registration-Succes")
     let newAccountButton = document.getElementById("create-account")
     let creditCardCheckBox = document.getElementById("creditCardCheckBox");
     let paypalCheckBox = document.getElementById("paypalCheckBox");
@@ -25,10 +45,16 @@ document.addEventListener("DOMContentLoaded", function () {
     showRegisterModalWhenError(registationError);
     showLoginModalWhenError(loginError);
     showLoginModalRegistrationSucces(registrationSucces);
-
-    newAccountButton.addEventListener('click',function (){
+    showForgetPasswordModalsendError(sendError);
+    showForgetPasswordModalsendSucces(sendSucces);
+    showLoginModalResetPasswordSucces(resetPassword);
+    forgetpassword.addEventListener('click', function () {
+        document.getElementById("login-close").click();
+        $('#pwdModal').modal('show');
+    });
+    newAccountButton.addEventListener('click', function () {
         $('#signin-modal').modal('show');
-        $('#login-modal').modal('hide');
+        document.getElementById("login-close").click();
     });
 
     creditCardCheckBox.addEventListener("change", function () {
@@ -88,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                             Password is required
                                         </div>
                                       </div>
-                                                                             
+
                                         <div class="col-md-6">
                                         <label for="paypalPassword2" class="form-label">Rep. password</label>
                                         <input type="password" class="form-control" id="paypalPassword2" placeholder="Repeat password" required>
@@ -96,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                             Repeated password is required
                                         </div>
                                         </div>
-                                        
+
                                 </div>
                             </div>`
         }

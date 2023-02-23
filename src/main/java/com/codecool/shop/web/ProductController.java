@@ -28,8 +28,14 @@ public class ProductController {
     public String helloWorld(Model model,
                              @ModelAttribute("acountExistError") String acountExistError,
                              @ModelAttribute("wrongLoginDataError") String wrongLoginDataError,
-                             @ModelAttribute("registrationSucces") String registrationSucces) {
+                             @ModelAttribute("registrationSucces") String registrationSucces,
+                             @ModelAttribute("sendSucces") String sendSucces,
+                             @ModelAttribute("sendError") String sendError,
+                             @ModelAttribute("resetPasswordSucces") String resetPasswordSucces){
+        model.addAttribute("sendSucces",sendSucces);
+        model.addAttribute("sendError",sendError);
         model.addAttribute("acountExistError",acountExistError);
+        model.addAttribute("resetPasswordSucces",resetPasswordSucces);
         model.addAttribute("wrongLoginDataError",wrongLoginDataError);
         model.addAttribute("registrationSucces",registrationSucces);
         model.addAttribute("products", productService.getAll());

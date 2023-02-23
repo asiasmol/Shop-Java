@@ -24,19 +24,22 @@ public class ResetPasswordController {
 
 
     @GetMapping("/resetPassword")
-    public String showResetPasswordForm(@RequestParam("token") String token, Model model, RedirectAttributes redirectAttributes) {
+    public String showResetPasswordForm(@RequestParam("token") String token, Model model) {
         if (!userService.TokenIsOk(token)){
-            redirectAttributes.addFlashAttribute("Wrong token", "Wrong Link!");
+            model.addAttribute("Wrongtoken", "Wrong Link!");
         }
         model.addAttribute("token",token);
         return "resetPassword";
     }
     @PostMapping("/resetPassword")
-    public String processResetPasswordForm(@RequestParam("token") String token, @RequestParam("password") String password, RedirectAttributes redirectAttributes) {
+    public String processResetPasswordForm(@RequestParam("token") String token, @RequestParam("password") String password,Model model,RedirectAttributes redirectAttributes) {
         if (!userService.TokenIsOk(token)){
-            redirectAttributes.addFlashAttribute("Wrong token", "Wrong Link!");
+            model.addAttribute("Wrongtoken", "Wrong Link!");
+            return "resetPassword";
+        }else{
+            redirectAttributes.addFlashAttribute("resetPasswordSucces", "Your Password Reset Succesfoul ;D");
+            userService.resetPassword(token,password);
+            return "redirect:/";
         }
-        userService.resetPassword(token,password);
-        return "redirect:/";
     }
 }
