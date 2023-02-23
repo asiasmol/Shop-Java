@@ -7,9 +7,6 @@ import com.codecool.shop.model.CartItem;
 import com.codecool.shop.model.Product;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
