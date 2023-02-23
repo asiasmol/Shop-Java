@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class OrderController {
@@ -24,8 +25,9 @@ public class OrderController {
     @PostMapping("/order")
     public String saveOrder(){
         String id = SecurityContextHolder.getContext().getAuthentication().getName();
-        System.out.println(id);
-        orderService.add(new Order(Integer.parseInt(id),cartService.get()));
+        if(!Objects.equals(id, "anonymousUser")){
+            orderService.add(new Order(Integer.parseInt(id),cartService.get()));
+        }
         return "redirect:/";
     }
 
