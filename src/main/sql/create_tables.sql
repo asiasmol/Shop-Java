@@ -1,9 +1,9 @@
 DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS password_reset_token;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS supplier;
 DROP TABLE IF EXISTS categories;
-
 
 
 CREATE TABLE users
@@ -14,6 +14,13 @@ CREATE TABLE users
     email    text,
     password text,
     address  text
+);
+
+CREATE TABLE password_reset_token
+(
+    id       SERIAL PRIMARY KEY,
+    token     text,
+    user_email     text
 );
 
 CREATE TABLE orders

@@ -1,10 +1,11 @@
 package com.codecool.shop.web;
 
 import com.codecool.shop.dao.implementation.UserDaoJdbc;
-import com.codecool.shop.model.User;
+import com.codecool.shop.model.User.User;
+import com.codecool.shop.service.EmailService;
+import com.codecool.shop.service.MyUserDetailsService;
 import com.codecool.shop.service.OrderService;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,20 +13,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Optional;
-
 @Controller
 public class UserController {
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
+    private MyUserDetailsService userService;
+    private EmailService emailService;
     private final OrderService orderService;
     private UserDaoJdbc userDao;
 
-    public UserController(UserDaoJdbc userDao, BCryptPasswordEncoder encoder, OrderService orderService) {
-        this.userDao = userDao;
-        this.bCryptPasswordEncoder = encoder;
+    public UserController(MyUserDetailsService userService, EmailService emailService, OrderService orderService, UserDaoJdbc userDao) {
+        this.userService = userService;
+        this.emailService = emailService;
         this.orderService = orderService;
+        this.userDao = userDao;
     }
 
     @PostMapping("/register")
@@ -34,13 +34,12 @@ public class UserController {
                                           @RequestParam("email") String email,
                                           @RequestParam("address") String address,
                                           @RequestParam("password") String password){
-            Optional<User> user = userDao.get(email);
-            if(user.isEmpty()){
-                String encodedPassword = bCryptPasswordEncoder.encode(password);
-                userDao.add(new User(firstname,lastName,email,encodedPassword,address));
-            } else {
+
+        if(userService.registration(firstname,lastName,email,password,address)){
+            redirectAttributes.addFlashAttribute("registrationSucces", "Registration is Succes!");
+        }else {
             redirectAttributes.addFlashAttribute("acountExistError", "this account already exist!");
-            }
+        }
         return "redirect:/";
     }
     @GetMapping("/logout")
@@ -60,4 +59,9 @@ public class UserController {
         model.addAttribute("orders", orderService.getAllOrdersForUser(userId));
         return "profile";
     }
+    @GetMapping("/forgotPassword")
+    public String forgetpassword(){
+        return "forgotPassword";
+    }
+
 }

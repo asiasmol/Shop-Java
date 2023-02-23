@@ -1,4 +1,4 @@
-package com.codecool.shop.model;
+package com.codecool.shop.model.User;
 
 public class User {
     private Long id;
@@ -33,7 +33,7 @@ public class User {
         return passwor;
     }
 
-    public boolean isAdmin() {
+    public boolean IsUser() {
         return true;
     }
 

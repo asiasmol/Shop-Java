@@ -1,8 +1,7 @@
 package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.UserDao;
-import com.codecool.shop.model.Product;
-import com.codecool.shop.model.User;
+import com.codecool.shop.model.User.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -24,6 +23,11 @@ public class UserDaoJdbc implements UserDao {
         jdbc.update("INSERT INTO users (name, surname,email,password,address) VALUES (?,?, ?, ?, ?)",
                 user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getAddress());
     }
+    @Override
+    public void changeUserPassword(User user, String password) {
+
+    }
+
     @Override
     public Optional<User> get(String email) {
         try{
@@ -54,5 +58,6 @@ public class UserDaoJdbc implements UserDao {
     private static User mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new User(rs.getLong("id"),rs.getString("name"),rs.getString("surname"), rs.getString("email"),rs.getString("password"),rs.getString("address") );
     }
+
 
 }

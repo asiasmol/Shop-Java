@@ -37,7 +37,6 @@ public class ProductController {
         model.addAttribute("acountExistError",acountExistError);
         model.addAttribute("wrongLoginDataError",wrongLoginDataError);
         model.addAttribute("registrationSucces",registrationSucces);
-        System.out.println(wrongLoginDataError);
         model.addAttribute("products", productService.getAll());
         return basicPage(model);
     }
