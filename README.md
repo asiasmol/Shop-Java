@@ -2,7 +2,7 @@
 
 The web store application is an innovative solution that enables customers to have convenient and hassle-free online shopping experience.
 
-![]https://github.com/asiasmol/Shop-Java/blob/cart-remove/shop1.gif
+![](https://github.com/asiasmol/Shop-Java/blob/cart-remove/shop1.gif)
 
 
 ## :star: Technology stack
